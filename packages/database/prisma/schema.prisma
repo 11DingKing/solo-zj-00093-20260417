@@ -7,6 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  COMPLETED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -14,4 +27,14 @@ model User {
   status    String   @default("active")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          Int             @id @default(autoincrement())
+  name        String
+  description String?
+  status      ProjectStatus   @default(ACTIVE)
+  priority    ProjectPriority @default(MEDIUM)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 }

@@ -6,7 +6,8 @@
   "dependencies": {
     "@hono/node-server": "^1.2.0",
     "hono": "^3.8.2",
-    "database": "workspace:*"
+    "database": "workspace:*",
+    "shared-types": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*",
