@@ -8,7 +8,7 @@
     },
     "lint": {},
     "dev": {
-      "dependsOn": ["^dev", "^db:generate"],
+      "dependsOn": ["^dev", "^db:generate", "^db:push"],
       "cache": false,
       "persistent": true
     },

@@ -6,6 +6,9 @@ services:
       - "3000:3000" # Reachable on localhost:3000
     depends_on:
       - api # Start after the API
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/hackathon
+    command: sh -c "pnpm --filter web dev"
     develop:
       watch:
         - action: sync # Synchronize the files on your host ./apps/web with your containers /app/apps/web when any file changes in that path
@@ -26,15 +29,16 @@ services:
     build:
       dockerfile: api.Dockerfile # Path to API Dockerfile
     ports:
-      - "3001:3000" # Reachable on localhost:3001, or api:3000 from within the Docker network
+      - "3001:3001" # Reachable on localhost:3001, or api:3001 from within the Docker network
     depends_on:
       - postgres # Start after the database
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/hackathon # Hardcoded database credentials are usually a no-go, but totally fine in this situation
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/hackathon # Hardcoded database credentials are usually a no-go, but totally fine in this situation
+    command: sh -c "pnpm --filter database db:generate && pnpm --filter database db:push && pnpm --filter api dev"
     develop:
       watch:
         - action: sync # Synchronize the files on your host ./apps/api with your containers /app/apps/api when any file changes in that path
-          path: ./apps/api 
+          path: ./apps/api
           target: /app/apps/api
           ignore:
             - node_modules/
@@ -49,4 +53,4 @@ services:
     environment: # Again, usually not a good idea to use these hardcoded credentials but okay for a hackathon
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: hackathon

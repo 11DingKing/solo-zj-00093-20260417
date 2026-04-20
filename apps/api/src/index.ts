@@ -357,7 +357,7 @@ app.delete("/projects/:id", async (c) => {
       {
         success: true,
       },
-      204
+      200
     );
   } catch (error) {
     console.error("Error deleting project:", error);

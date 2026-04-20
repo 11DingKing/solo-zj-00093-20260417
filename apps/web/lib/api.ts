@@ -26,6 +26,10 @@ async function handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
     }
   }
 
+  if (response.status === 204) {
+    return { success: true } as ApiResponse<T>;
+  }
+
   const data = await response.json();
   return data as ApiResponse<T>;
 }
